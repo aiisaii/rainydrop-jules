@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RainyDrop Clone</title>
+  <style>
+    body {
+      width: 300px;
+      font-family: sans-serif;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Save Bookmark</h1>
+  <form id="save-bookmark-form">
+    <div>
+      <label>Title</label>
+      <input type="text" id="title" required>
+    </div>
+    <div>
+      <label>URL</label>
+      <input type="url" id="url" required>
+    </div>
+    <div>
+      <label>Description</label>
+      <textarea id="description"></textarea>
+    </div>
+    <button type="submit">Save</button>
+  </form>
+  <script src="popup.js"></script>
+</body>
+</html>

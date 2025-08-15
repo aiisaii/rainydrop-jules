@@ -1,0 +1,93 @@
+(0.001)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) SELECT JSON('{"a": "b"}'); args=None; alias=default
+(0.000) COMMIT; args=None; alias=default
+(0.001)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) PRAGMA foreign_keys = OFF; args=None; alias=default
+(0.000) PRAGMA foreign_keys; args=None; alias=default
+(0.000) BEGIN; args=None; alias=default
+CREATE TABLE "core_collection" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(255) NOT NULL, "description" text NULL, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED); (params None)
+(0.001) CREATE TABLE "core_collection" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(255) NOT NULL, "description" text NULL, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED); args=None; alias=default
+CREATE TABLE "core_collection_bookmarks" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED, "bookmark_id" bigint NOT NULL REFERENCES "core_bookmark" ("id") DEFERRABLE INITIALLY DEFERRED); (params None)
+(0.000) CREATE TABLE "core_collection_bookmarks" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED, "bookmark_id" bigint NOT NULL REFERENCES "core_bookmark" ("id") DEFERRABLE INITIALLY DEFERRED); args=None; alias=default
+CREATE TABLE "core_publiclink" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "token" varchar(32) NOT NULL UNIQUE, "password" varchar(128) NULL, "expiration_date" datetime NULL, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED); (params None)
+(0.000) CREATE TABLE "core_publiclink" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "token" varchar(32) NOT NULL UNIQUE, "password" varchar(128) NULL, "expiration_date" datetime NULL, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED); args=None; alias=default
+CREATE TABLE "core_sharedcollection" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "permission" varchar(10) NOT NULL, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED, "shared_with_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED); (params None)
+(0.000) CREATE TABLE "core_sharedcollection" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "permission" varchar(10) NOT NULL, "collection_id" bigint NOT NULL REFERENCES "core_collection" ("id") DEFERRABLE INITIALLY DEFERRED, "shared_with_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED); args=None; alias=default
+(0.000) PRAGMA foreign_key_check; args=None; alias=default
+CREATE INDEX "core_collection_user_id_4586cc5b" ON "core_collection" ("user_id"); (params None)
+(0.000) CREATE INDEX "core_collection_user_id_4586cc5b" ON "core_collection" ("user_id"); args=None; alias=default
+CREATE UNIQUE INDEX "core_collection_bookmarks_collection_id_bookmark_id_26dfa113_uniq" ON "core_collection_bookmarks" ("collection_id", "bookmark_id"); (params None)
+(0.000) CREATE UNIQUE INDEX "core_collection_bookmarks_collection_id_bookmark_id_26dfa113_uniq" ON "core_collection_bookmarks" ("collection_id", "bookmark_id"); args=None; alias=default
+CREATE INDEX "core_collection_bookmarks_collection_id_9bc4e404" ON "core_collection_bookmarks" ("collection_id"); (params None)
+(0.000) CREATE INDEX "core_collection_bookmarks_collection_id_9bc4e404" ON "core_collection_bookmarks" ("collection_id"); args=None; alias=default
+CREATE INDEX "core_collection_bookmarks_bookmark_id_839850cd" ON "core_collection_bookmarks" ("bookmark_id"); (params None)
+(0.000) CREATE INDEX "core_collection_bookmarks_bookmark_id_839850cd" ON "core_collection_bookmarks" ("bookmark_id"); args=None; alias=default
+CREATE INDEX "core_publiclink_collection_id_a6f2d1ff" ON "core_publiclink" ("collection_id"); (params None)
+(0.000) CREATE INDEX "core_publiclink_collection_id_a6f2d1ff" ON "core_publiclink" ("collection_id"); args=None; alias=default
+CREATE UNIQUE INDEX "core_sharedcollection_collection_id_shared_with_id_e28b56f0_uniq" ON "core_sharedcollection" ("collection_id", "shared_with_id"); (params None)
+(0.000) CREATE UNIQUE INDEX "core_sharedcollection_collection_id_shared_with_id_e28b56f0_uniq" ON "core_sharedcollection" ("collection_id", "shared_with_id"); args=None; alias=default
+CREATE INDEX "core_sharedcollection_collection_id_93f80afd" ON "core_sharedcollection" ("collection_id"); (params None)
+(0.000) CREATE INDEX "core_sharedcollection_collection_id_93f80afd" ON "core_sharedcollection" ("collection_id"); args=None; alias=default
+CREATE INDEX "core_sharedcollection_shared_with_id_ba62e6d5" ON "core_sharedcollection" ("shared_with_id"); (params None)
+(0.000) CREATE INDEX "core_sharedcollection_shared_with_id_ba62e6d5" ON "core_sharedcollection" ("shared_with_id"); args=None; alias=default
+(0.008) COMMIT; args=None; alias=default
+(0.000) PRAGMA foreign_keys = ON; args=None; alias=default
+(0.000) INSERT INTO "django_migrations" ("app", "name", "applied") VALUES ('core', '0002_collection_publiclink_sharedcollection', '2025-08-15 01:18:14.273754') RETURNING "django_migrations"."id"; args=('core', '0002_collection_publiclink_sharedcollection', '2025-08-15 01:18:14.273754'); alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'admin'; args=('admin',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'admin' AND "django_content_type"."model" IN ('logentry')); args=('admin', 'logentry'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (1) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(1,); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'admin'; args=('admin',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'auth'; args=('auth',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'auth' AND "django_content_type"."model" IN ('group', 'user', 'permission')); args=('auth', 'group', 'user', 'permission'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (2, 3, 4) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(2, 3, 4); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'auth'; args=('auth',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'contenttypes'; args=('contenttypes',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'contenttypes' AND "django_content_type"."model" IN ('contenttype')); args=('contenttypes', 'contenttype'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (5) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(5,); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'contenttypes'; args=('contenttypes',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'sessions'; args=('sessions',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'sessions' AND "django_content_type"."model" IN ('session')); args=('sessions', 'session'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (6) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(6,); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'sessions'; args=('sessions',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'authtoken'; args=('authtoken',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'authtoken' AND "django_content_type"."model" IN ('token', 'tokenproxy')); args=('authtoken', 'token', 'tokenproxy'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (13, 14) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(13, 14); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'authtoken'; args=('authtoken',); alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'core'; args=('core',); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) INSERT INTO "django_content_type" ("app_label", "model") VALUES ('core', 'publiclink'), ('core', 'sharedcollection'), ('core', 'collection') RETURNING "django_content_type"."id"; args=('core', 'publiclink', 'core', 'sharedcollection', 'core', 'collection'); alias=default
+(0.002) COMMIT; args=None; alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE ("django_content_type"."app_label" = 'core' AND "django_content_type"."model" IN ('torrent', 'bookmark', 'collection', 'category', 'userprofile', 'influencer', 'tag', 'sharedcollection', 'publiclink')); args=('core', 'torrent', 'bookmark', 'collection', 'category', 'userprofile', 'influencer', 'tag', 'sharedcollection', 'publiclink'); alias=default
+(0.000) SELECT "auth_permission"."content_type_id" AS "content_type", "auth_permission"."codename" AS "codename" FROM "auth_permission" INNER JOIN "django_content_type" ON ("auth_permission"."content_type_id" = "django_content_type"."id") WHERE "auth_permission"."content_type_id" IN (7, 8, 9, 10, 11, 12, 15, 16, 17) ORDER BY "django_content_type"."app_label" ASC, "django_content_type"."model" ASC, 2 ASC; args=(7, 8, 9, 10, 11, 12, 15, 16, 17); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) INSERT INTO "auth_permission" ("name", "content_type_id", "codename") VALUES ('Can add public link', 15, 'add_publiclink'), ('Can change public link', 15, 'change_publiclink'), ('Can delete public link', 15, 'delete_publiclink'), ('Can view public link', 15, 'view_publiclink'), ('Can add shared collection', 16, 'add_sharedcollection'), ('Can change shared collection', 16, 'change_sharedcollection'), ('Can delete shared collection', 16, 'delete_sharedcollection'), ('Can view shared collection', 16, 'view_sharedcollection'), ('Can add collection', 17, 'add_collection'), ('Can change collection', 17, 'change_collection'), ('Can delete collection', 17, 'delete_collection'), ('Can view collection', 17, 'view_collection') RETURNING "auth_permission"."id"; args=('Can add public link', 15, 'add_publiclink', 'Can change public link', 15, 'change_publiclink', 'Can delete public link', 15, 'delete_publiclink', 'Can view public link', 15, 'view_publiclink', 'Can add shared collection', 16, 'add_sharedcollection', 'Can change shared collection', 16, 'change_sharedcollection', 'Can delete shared collection', 16, 'delete_sharedcollection', 'Can view shared collection', 16, 'view_sharedcollection', 'Can add collection', 17, 'add_collection', 'Can change collection', 17, 'change_collection', 'Can delete collection', 17, 'delete_collection', 'Can view collection', 17, 'view_collection'); alias=default
+(0.002) COMMIT; args=None; alias=default
+(0.000) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'core'; args=('core',); alias=default
+(0.002)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."username" = 'admin' LIMIT 21; args=('admin',); alias=default
+(0.001) INSERT INTO "auth_user" ("password", "last_login", "is_superuser", "username", "first_name", "last_name", "email", "is_staff", "is_active", "date_joined") VALUES ('!yfDXDKLwvFgzvUgowJ9EGX89NRqmgnOCeYyRHKIT', NULL, 1, 'admin', '', '', 'admin@example.com', 1, 1, '2025-08-15 01:32:01.684679') RETURNING "auth_user"."id"; args=('!yfDXDKLwvFgzvUgowJ9EGX89NRqmgnOCeYyRHKIT', None, True, 'admin', '', '', 'admin@example.com', True, True, '2025-08-15 01:32:01.684679'); alias=default
+(0.003) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."username" = 'admin' LIMIT 21; args=('admin',); alias=default
+(0.005) UPDATE "auth_user" SET "password" = 'pbkdf2_sha256$1000000$kFVqM14iyQCG4NTk0WQYSJ$yHM6n3F8PFRLy8D7waVSzwNHqMG8GwOQXDTTlaPGdhc=', "last_login" = NULL, "is_superuser" = 1, "username" = 'admin', "first_name" = '', "last_name" = '', "email" = 'admin@example.com', "is_staff" = 1, "is_active" = 1, "date_joined" = '2025-08-15 01:32:01.684679' WHERE "auth_user"."id" = 4; args=('pbkdf2_sha256$1000000$kFVqM14iyQCG4NTk0WQYSJ$yHM6n3F8PFRLy8D7waVSzwNHqMG8GwOQXDTTlaPGdhc=', True, 'admin', '', '', 'admin@example.com', True, True, '2025-08-15 01:32:01.684679', 4); alias=default
